@@ -2,7 +2,7 @@
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase.js";
 import type { PaginatedListResponse } from "../types/global.js";
-import { realpath } from "fs";
+
 
 //Hämtar Courses
 // export const getCourses = async () => {

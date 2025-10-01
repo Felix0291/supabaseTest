@@ -1,0 +1,51 @@
+-- -- Skapa tabell för studenter
+-- create table if not exists students (
+--   student_id text primary key,
+--   first_name text not null,
+--   last_name text not null,
+--   email text unique not null,
+--   date_of_birth date not null,
+--   major text,
+--   phone_number text
+-- );
+
+-- -- Skapa tabell för kursregistreringar (student -> course)
+-- create table if not exists enrollments (
+--   enrollment_id uuid default gen_random_uuid() primary key,
+--   student_id text references students(student_id) on delete cascade,
+--   course_id text not null
+-- );
+
+-- -- Sätt in unika studenter
+-- insert into students (student_id, first_name, last_name, email, date_of_birth, major, phone_number)
+-- values
+-- ('std_001', 'Anna', 'Karlsson', 'anna.k@example.com', '2003-05-15', 'Software Engineering', null),
+-- ('std_002', 'Lars', 'Andersson', 'lars.a@example.com', '2001-11-30', 'Software Engineering', '073-9876543'),
+-- ('std_003', 'Mikael', 'Persson', 'm.persson@example.com', '2002-01-20', 'Data Science', '070-1112233'),
+-- ('std_004', 'Emma', 'Nilsson', 'emma.nilsson@example.com', '2003-08-22', null, null),
+-- ('std_005', 'Karin', 'Eriksson', 'karin.e@example.com', '2000-06-10', 'History', '076-5554433'),
+-- ('std_006', 'Peter', 'Johansson', 'p.johansson@example.com', '2001-02-05', null, null),
+-- ('std_007', 'Sofia', 'Lindgren', 'sofia.lindgren@example.com', '2004-03-12', null, null),
+-- ('std_008', 'Erik', 'Gustafsson', 'erik.g@example.com', '2002-09-03', 'Computer Science', null),
+-- ('std_009', 'William', 'Berg', 'william.b@example.com', '2002-12-01', 'Interaction Design', null),
+-- ('std_010', 'Olivia', 'Holm', 'olivia.h@example.com', '2004-07-19', 'Political Science', null)
+-- on conflict (student_id) do nothing;
+
+-- __
+-- __
+-- -- Lägg in kursregistreringar
+-- insert into enrollments (student_id, course_id)
+-- values
+-- ('std_001', 'PGSQL-101'),
+-- ('std_003', 'PGSQL-101'),
+-- ('std_007', 'PGSQL-101'),
+-- ('std_001', 'WEBDEV-205'),
+-- ('std_002', 'WEBDEV-205'),
+-- ('std_004', 'WEBDEV-205'),
+-- ('std_009', 'WEBDEV-205'),
+-- ('std_005', 'HIST-101'),
+-- ('std_006', 'HIST-101'),
+-- ('std_010', 'HIST-101'),
+-- ('std_002', 'ALGO-301'),
+-- ('std_003', 'ALGO-301'),
+-- ('std_008', 'ALGO-301');
