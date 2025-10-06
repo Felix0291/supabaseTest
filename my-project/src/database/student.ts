@@ -49,3 +49,33 @@ export async function getStudents(
       limit: query.limit || 10,
     };
   }
+
+  export async function getStudentById(id: string): Promise<Student | null> {
+    const query = supabase.from("students").select("*").eq("student_id", id).single();
+    const response: PostgrestSingleResponse<Student> = await query;
+    return response.data;
+  }
+
+  export const createStudent = async (student: NewStudent) => {
+    const query = supabase.from("students").insert(student).select().single();
+    const response: PostgrestSingleResponse<Student> = await query;
+    return response
+}
+
+
+
+export async function updateStudent(id: string, student: NewStudent): Promise<Student | null> {
+  const studentWithoutId: NewStudent = {
+    ...student,
+    student_id: undefined
+  }  
+  const query = supabase.from("students").update(studentWithoutId).eq("student_id", id).select().single();
+  const response: PostgrestSingleResponse<Student> = await query;
+  return response.data;
+}
+
+export async function deleteStudent(id:string): Promise<Student | null> {
+  const query = supabase.from("students").delete().eq("student_id", id).select().single()
+  const response: PostgrestSingleResponse<Student> = await query;
+  return response.data
+}

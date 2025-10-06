@@ -11,19 +11,8 @@ const courseApp = new Hono()
 
 
 //Hämtar all Courses
-// courseApp.get("/", courseQueryValidator, async (c) => {
-//   const {data, error} = await supabase.from("courses").select("*");
-//   if (error) {
-//     throw new HTTPException(500, {
-//         res: c.json({error: error.message }, 500),
-//     })
-//   }
-//   return c.json(data ?? [])
-// });
-
 courseApp.get("/", courseQueryValidator, async (c) => {
   const query = c.req.valid("query");
-
   try {
     const courses = await db.getCourses(query);
     return c.json(courses);
@@ -41,19 +30,16 @@ courseApp.get("/", courseQueryValidator, async (c) => {
   }
 });
 
-
 //Hämtar Course via ID
-
 courseApp.get("/:id", async (c) => {
-    const { id } = c.req.param();
-    const course = await db.getCourseById(id);
-    if (!course) {
-        throw new HTTPException(404, {
-            res: c.json({ error: "Course not found" }, 404)
-        });
+  const { id } = c.req.param();
+  const course = await db.getCourseById(id);
+  if (!course) {
+    throw new HTTPException(404, { message: "Course not found" })
     }
-    return c.json(course, 200);
+  return c.json(course, 200);
 });
+
 
 //Skapar en ny Course
 courseApp.post("/", courseValidator, async (c) => {

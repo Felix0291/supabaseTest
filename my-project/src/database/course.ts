@@ -60,10 +60,9 @@ export async function getCourses(
 }
 
 //Hämtar Course via ID
-export async function getCourseById(id: string): Promise<Course> {
+export async function getCourseById(id: string): Promise<Course | null> {
   const query = supabase.from("courses").select("*").eq("course_id", id).single();
   const response: PostgrestSingleResponse<Course> = await query;
-  if(response.error) throw response.error
   return response.data;
 }
 
